@@ -64,6 +64,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             likes={likes}
             comments={comments}
           />
+          
         )
       )}
     </>

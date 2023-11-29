@@ -54,7 +54,9 @@ import {
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
+          
         />
+        {console.log(name + ' ' + userPicturePath)}
         <Typography color={main} sx={{ mt: "1rem" }}>
           {description}
         </Typography>

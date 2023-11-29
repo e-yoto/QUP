@@ -40,6 +40,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
     <FlexBetween>
       <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
+        {/* {console.log(userPicturePath)} */}
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);
