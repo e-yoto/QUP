@@ -9,7 +9,7 @@ import {
     FormControl,
     useTheme,
     useMediaQuery, 
-    Icon} from "@mui/material";
+    } from "@mui/material";
 import {
     Search,
     Message,
@@ -19,7 +19,6 @@ import {
     Help,
     Menu,
     Close,
-    Light
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
@@ -28,7 +27,7 @@ import FlexBetween from "components/FlexBetween";
 
 const Navbar = () => {
     const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
-    const dispact = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
@@ -42,7 +41,8 @@ const Navbar = () => {
 
     const fullName = `${user.firstName} ${user.lastName}`;
 
-    return (<FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    return (
+    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
         <FlexBetween gap="1.5rem">
             <Typography 
                 fontWeight="bold" 
@@ -56,7 +56,7 @@ const Navbar = () => {
                     },
                 }}
             >
-                cumzone
+                Q-Up
             </Typography>
             {isNonMobileScreens && (
                 <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
@@ -68,10 +68,11 @@ const Navbar = () => {
                 </FlexBetween>
             )}
         </FlexBetween>
+
         {/* DESKTOP NAV */}
         {isNonMobileScreens ? (
             <FlexBetween gap="2rem">
-                <IconButton onClick={() => dispatchEvent(setMode())}>
+                <IconButton onClick={() => dispatch(setMode())}>
                     {theme.palette.mode === "dark" ? (
                         <DarkMode sx={{ fontSize: "25px"}}/>
                     ) : (
@@ -150,7 +151,9 @@ const Navbar = () => {
                         <MenuItem value={fullName}>
                             <Typography>{fullName}</Typography>
                         </MenuItem>
-                        <MenuItem onClick={() => dispatchEvent(setLogout())}></MenuItem>
+                        <MenuItem onClick={() => dispatch(setLogout())}>
+                            Log Out
+                        </MenuItem>
                     </Select>
                 </FormControl>
                 </FlexBetween>
