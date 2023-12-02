@@ -133,7 +133,7 @@ import {
   
           <FlexBetween gap="1rem">
             <FlexBetween gap="1rem">
-              <img src="../assets/linkedin.png" alt="linkedin" />
+              <img src="../assets/discord.jpg" alt="linkedin" />
               <Box>
                 <Typography color={main} fontWeight="500">
                   Linkedin

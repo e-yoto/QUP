@@ -283,3 +283,32 @@ export const posts = [
     ],
   },
 ];
+
+
+
+
+// ======================GAME DATA===================
+export const games = [
+  {
+    _id: new mongoose.Types.ObjectId(),
+    gameId: 1,
+    name: "Valorant",
+    picturePath: "valorant_cover.png",
+    modes: ["Competitive", "Unrated" , "Swiftplay"]
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    gameId: 2,
+    name: "Leauge of Legends",
+    picturePath: "lol_cover.jpg",
+    modes: ["Ranked", "Normals"]
+  },
+  {
+    _id: new mongoose.Types.ObjectId(),
+    gameId: 3,
+    name: "Counter Strike 2",
+    picturePath: "cs2_cover.png",
+    modes: ["Premier", "Competitive", "Casual"]
+  },
+
+];
