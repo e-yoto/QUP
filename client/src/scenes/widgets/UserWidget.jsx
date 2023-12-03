@@ -45,8 +45,8 @@ import {
       bio,
       discordSocial,
       steamSocial,
-      viewedProfile,
-      impressions,
+      // viewedProfile,
+      // impressions,
       friends,
     } = user;
 

@@ -351,3 +351,19 @@ export const games = [
   },
 
 ];
+
+// ======================NEW POSTS DATA===================
+export const postsNEW = [
+  {
+    _id: new mongoose.Types.ObjectId(),
+    userId: "656bd0d445f6e2b0366a6cea",
+    username: "gods",
+    description: "lemme carry u",
+    game: "League of Legends",
+    userPicturePath: "faker.jpeg",
+    mode: "competitive",
+    region: "na-east",
+    size: 5,
+  },
+
+];

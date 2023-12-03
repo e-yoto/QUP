@@ -67,7 +67,7 @@ const Form = () => {
     }
     formData.append("picturePath", values.picture.name);
     formData.append("games", selectedGames);
-    console.log("EEEEEEEEEEEEEE" + selectedGames);
+    console.log("GAMES: " + selectedGames);
 
     console.log(values);
     console.log(formData);

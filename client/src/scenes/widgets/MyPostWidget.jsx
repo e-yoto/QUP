@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -9,13 +10,17 @@ import {
 } from "@mui/icons-material";
 import {
   Box,
-  Divider,
   Typography,
   InputBase,
   useTheme,
   Button,
   IconButton,
   useMediaQuery,
+  Select,
+  MenuItem,
+  FormHelperText,
+  FormControl,
+  InputLabel
 } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import Dropzone from "react-dropzone";
@@ -36,6 +41,10 @@ const MyPostWidget = ({ picturePath }) => {
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
+  const [game, setGame] = React.useState('');
+  const [mode, setMode] = React.useState('');
+  const [lobby, setLobbySize] = React.useState('');
+  const [region, setRegion] = React.useState('');
 
   const handlePost = async () => {
     const formData = new FormData();
@@ -45,7 +54,11 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-
+    formData.append("game", game);
+    formData.append("mode", mode);
+    formData.append("size", lobby);
+    formData.append("region", region);
+    console.log(formData);
     const response = await fetch(`http://localhost:3001/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
@@ -57,12 +70,29 @@ const MyPostWidget = ({ picturePath }) => {
     setPost("");
   };
 
+  
+
+  const handleChangeGame = (event) => {
+    setGame(event.target.value);
+  };
+  const handleChangeMode = (event) => {
+    setMode(event.target.value);
+  };
+  const handleChangeLobbySize = (event) => {
+    setLobbySize(event.target.value);
+  };
+  const handleChangeRegion = (event) => {
+    setRegion(event.target.value);
+  };
+
+
   return (
+    
     <WidgetWrapper>
-      <FlexBetween gap="1.5rem">
-        <UserImage image={picturePath} />
+      <Typography variant='h3' paddingBottom={"1rem"}>Create a Q</Typography>
+      <FlexBetween gap="1.5re4">
         <InputBase
-          placeholder="What's on your mind..."
+          placeholder="Description ex: 'Looking for team to play some ranked!'"
           onChange={(e) => setPost(e.target.value)}
           value={post}
           sx={{
@@ -73,87 +103,124 @@ const MyPostWidget = ({ picturePath }) => {
           }}
         />
       </FlexBetween>
-      {isImage && (
-        <Box
-          border={`1px solid ${medium}`}
-          borderRadius="5px"
-          mt="1rem"
-          p="1rem"
-        >
-          <Dropzone
-            acceptedFiles=".jpg,.jpeg,.png"
-            multiple={false}
-            onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+      <FlexBetween margin="1.5rem">
+        <FormControl required sx={{ minWidth: 200 }}>
+          <InputLabel id="select-game">Game</InputLabel>
+          <Select
+            value={game}
+            label="Select a game"
+            onChange={handleChangeGame}
           >
-            {({ getRootProps, getInputProps }) => (
+            <MenuItem value={"League of Legends"}>
               <FlexBetween>
-                <Box
-                  {...getRootProps()}
-                  border={`2px dashed ${palette.primary.main}`}
-                  p="1rem"
-                  width="100%"
-                  sx={{ "&:hover": { cursor: "pointer" } }}
-                >
-                  <input {...getInputProps()} />
-                  {!image ? (
-                    <p>Add Image Here</p>
-                  ) : (
-                    <FlexBetween>
-                      <Typography>{image.name}</Typography>
-                      <EditOutlined />
-                    </FlexBetween>
-                  )}
-                </Box>
-                {image && (
-                  <IconButton
-                    onClick={() => setImage(null)}
-                    sx={{ width: "15%" }}
-                  >
-                    <DeleteOutlined />
-                  </IconButton>
-                )}
+              <img  width= "20px"src="http://localhost:3001/assets/lol_icon.png" alt="lol" />League of Legends 
               </FlexBetween>
-            )}
-          </Dropzone>
-        </Box>
-      )}
+            </MenuItem>
+            <MenuItem value={"Valorant"}>
+              <FlexBetween>
+              <img  width= "20px"src="http://localhost:3001/assets/valorant_icon.png" alt="valorant" />Valorant 
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value={"Counter Strike 2"}>
+              <FlexBetween>
+              <img  width= "20px"src="http://localhost:3001/assets/cs_icon.webp" alt="cs2" />Counter Strike 2 
+              </FlexBetween>
+            </MenuItem>
+            
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
 
-      <Divider sx={{ margin: "1.25rem 0" }} />
-
-      <FlexBetween>
-        <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
-          <ImageOutlined sx={{ color: mediumMain }} />
-          <Typography
-            color={mediumMain}
-            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
+        <FormControl required sx={{ minWidth: 200 }}>
+          <InputLabel id="select-mode">Mode</InputLabel>
+          <Select
+            value={mode}
+            label="Select a mode"
+            onChange={handleChangeMode}
           >
-            Image
-          </Typography>
-        </FlexBetween>
+            <MenuItem value={"competitive"}>
+              <FlexBetween>
+                Competitive 
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value={"casual"}>
+              <FlexBetween>
+              Casual
+              </FlexBetween>
+            </MenuItem>
+            
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
 
-        {isNonMobileScreens ? (
-          <>
-            <FlexBetween gap="0.25rem">
-              <GifBoxOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Clip</Typography>
-            </FlexBetween>
+      </FlexBetween>
 
-            <FlexBetween gap="0.25rem">
-              <AttachFileOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Attachment</Typography>
-            </FlexBetween>
+      <FlexBetween margin="1.5rem">
+        <FormControl required sx={{ minWidth: 200 }}>
+          <InputLabel id="select-lobby-size">Lobby size</InputLabel>
+          <Select
+            value={lobby}
+            label="Select a lobby size"
+            onChange={handleChangeLobbySize}
+          >
+            <MenuItem value={2}>
+              <FlexBetween>
+              2
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value={3}>
+              <FlexBetween>
+              3
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value={4}>
+              <FlexBetween>
+              4
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value={5}>
+              <FlexBetween>
+              5
+              </FlexBetween>
+            </MenuItem>
+            
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
 
-            <FlexBetween gap="0.25rem">
-              <MicOutlined sx={{ color: mediumMain }} />
-              <Typography color={mediumMain}>Audio</Typography>
-            </FlexBetween>
-          </>
-        ) : (
-          <FlexBetween gap="0.25rem">
-            <MoreHorizOutlined sx={{ color: mediumMain }} />
-          </FlexBetween>
-        )}
+        <FormControl required sx={{ minWidth: 200 }}>
+          <InputLabel id="select-region">Region</InputLabel>
+          <Select
+            value={region}
+            label="Select a region"
+            onChange={handleChangeRegion}
+          >
+            <MenuItem value="na-east">
+              <FlexBetween>
+                NA East 
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value="na-west">
+              <FlexBetween>
+                NA West 
+              </FlexBetween>
+            </MenuItem>
+            <MenuItem value="na-central">
+              <FlexBetween>
+                NA Central 
+              </FlexBetween>
+            </MenuItem>
+            
+            
+          </Select>
+          <FormHelperText>Required</FormHelperText>
+        </FormControl>
 
+      </FlexBetween>
+      
+      
+
+      <FlexBetween >
         <Button
           disabled={!post}
           onClick={handlePost}
@@ -161,9 +228,10 @@ const MyPostWidget = ({ picturePath }) => {
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
             borderRadius: "3rem",
+            width: "100px"
           }}
         >
-          POST
+          CREATE
         </Button>
       </FlexBetween>
     </WidgetWrapper>
