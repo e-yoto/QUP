@@ -6,6 +6,8 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  Checkbox,
+  FormGroup
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
@@ -17,12 +19,11 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
+  username: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
   location: yup.string().required("required"),
-  occupation: yup.string().required("required"),
+  bio: yup.string().required("required"),
   picture: yup.string().required("required"),
 });
 
@@ -32,12 +33,11 @@ const loginSchema = yup.object().shape({
 });
 
 const initialValuesRegister = {
-  firstName: "",
-  lastName: "",
+  username: "",
   email: "",
   password: "",
   location: "",
-  occupation: "",
+  bio: "",
   picture: "",
 };
 
@@ -45,6 +45,10 @@ const initialValuesLogin = {
   email: "",
   password: "",
 };
+
+
+
+
 
 const Form = () => {
   const [pageType, setPageType] = useState("login");
@@ -62,7 +66,11 @@ const Form = () => {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", values.picture.name);
+    formData.append("games", selectedGames);
+    console.log("GAMES: " + selectedGames);
 
+    console.log(values);
+    console.log(formData);
     const savedUserResponse = await fetch(
       "http://localhost:3001/auth/register",
       {
@@ -102,6 +110,18 @@ const Form = () => {
     if (isRegister) await register(values, onSubmitProps);
   };
 
+  const [selectedGames, setSelectedGames] = useState([]);
+
+  const handleCheckboxChange = (game) => {
+    if (selectedGames.includes(game)) {
+      // If the game is already selected, remove it
+      setSelectedGames(selectedGames.filter(selectedGame => selectedGame !== game));
+    } else {
+      // If the game is not selected, add it
+      setSelectedGames([...selectedGames, game]);
+    }
+  };
+
   return (
     <Formik
       onSubmit={handleFormSubmit}
@@ -127,29 +147,40 @@ const Form = () => {
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
           >
+            <TextField
+              label="Email"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.email}
+              name="email"
+              error={Boolean(touched.email) && Boolean(errors.email)}
+              helperText={touched.email && errors.email}
+              sx={{ gridColumn: "span 4" }}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.password}
+              name="password"
+              error={Boolean(touched.password) && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
+              sx={{ gridColumn: "span 4" }}
+            />
             {isRegister && (
               <>
                 <TextField
-                  label="First Name"
+                  label="Username"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
-                  name="firstName"
+                  value={values.username}
+                  name="username"
                   error={
-                    Boolean(touched.firstName) && Boolean(errors.firstName)
+                    Boolean(touched.username) && Boolean(errors.username)
                   }
-                  helperText={touched.firstName && errors.firstName}
-                  sx={{ gridColumn: "span 2" }}
-                />
-                <TextField
-                  label="Last Name"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  name="lastName"
-                  error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                  helperText={touched.lastName && errors.lastName}
-                  sx={{ gridColumn: "span 2" }}
+                  helperText={touched.username && errors.username}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   label="Location"
@@ -162,15 +193,15 @@ const Form = () => {
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
-                  label="Occupation"
+                  label="Bio"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.occupation}
-                  name="occupation"
+                  value={values.bio}
+                  name="bio"
                   error={
-                    Boolean(touched.occupation) && Boolean(errors.occupation)
+                    Boolean(touched.bio) && Boolean(errors.bio)
                   }
-                  helperText={touched.occupation && errors.occupation}
+                  helperText={touched.bio && errors.bio}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <Box
@@ -206,31 +237,111 @@ const Form = () => {
                     )}
                   </Dropzone>
                 </Box>
+
+                <TextField
+                  label="Discord Username (Optional)"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.discordSocial}
+                  name="discordSocial"
+                  sx={{ gridColumn: "span 4" }}
+                />
+
+                <TextField
+                  label="Steam Friend Code (Optional)"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.steamSocial}
+                  name="steamSocial"
+                  sx={{ gridColumn: "span 4" }}
+                />
+
+                <Box
+                  gridColumn="span 4"
+                  border={`1px solid ${palette.neutral.medium}`}
+                  borderRadius="5px"
+                  p="1rem"
+
+                >
+                  <Typography variant="h5">Select your games:</Typography>
+
+                  <FormGroup>
+                  <FlexBetween  >
+                      <Box>
+                    <label>
+                    <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/valorant_cover.png" alt="valorant" />
+                      <Checkbox
+                        value="Valorant"
+                        checked={selectedGames.includes('Valorant')}
+                        onChange={() => handleCheckboxChange('Valorant')}
+                      />
+                    </label>
+                    <br />
+                          </Box>
+                          <Box>
+                    <label>
+                      <Checkbox
+                        value="LeagueOfLegends"
+                        checked={selectedGames.includes('LeagueOfLegends')}
+                        onChange={() => handleCheckboxChange('LeagueOfLegends')}
+                      />
+                      <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/lol_cover.jpg" alt="LoL" />
+                    </label>
+                    <br />
+                    </Box>
+                          
+
+                    </FlexBetween>
+                    <label>
+                    <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/cs2_cover.png" alt="CS2" />
+                      <Checkbox
+                        value="CounterStrike2"
+                        checked={selectedGames.includes('CounterStrike2')}
+                        onChange={() => handleCheckboxChange('CounterStrike2')}
+                      />
+                    </label>
+                    <br />
+                      {/* <p>Selected Games: {selectedGames.join(', ')}</p> */}
+                  </FormGroup>
+{/* 
+                  <FormGroup >
+                  <FlexBetween  >
+                      <Box>
+
+                        <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/valorant_cover.png" alt="valorant" />
+                        <Checkbox value={1}  name="valorant" />
+                      </Box>
+                      <Box>
+                        <Checkbox value={2} name="league of legends" />
+                        <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/lol_cover.jpg" alt="LoL" />
+                        
+                      </Box>
+                    </FlexBetween>
+
+                    <FlexBetween  >
+                      <Box>
+
+                        <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/cs2_cover.png" alt="CS2" />
+                        <Checkbox value={3}  name="counter strike 2" />
+                      </Box>
+                      <Box>
+                        <Checkbox  name="counter strike 2" />
+                        <img style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }} src="http://localhost:3001/assets/cs2_cover.png" alt="CS2" />
+                      </Box>
+                    </FlexBetween>
+
+                  </FormGroup> */}
+                  
+
+
+                </Box>
               </>
             )}
 
-            <TextField
-              label="Email"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.email}
-              name="email"
-              error={Boolean(touched.email) && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-              sx={{ gridColumn: "span 4" }}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              onBlur={handleBlur}
-              onChange={handleChange}
-              value={values.password}
-              name="password"
-              error={Boolean(touched.password) && Boolean(errors.password)}
-              helperText={touched.password && errors.password}
-              sx={{ gridColumn: "span 4" }}
-            />
+            
           </Box>
+
+          
 
           {/* BUTTONS */}
           <Box>

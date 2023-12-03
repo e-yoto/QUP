@@ -11,6 +11,45 @@ const userIds = [
   new mongoose.Types.ObjectId(),
 ];
 
+
+
+export const usersNEW = [
+  {
+    _id: userIds[0],
+    username: "Faker",
+    email: "faker@faker.com",
+    password: "faker",
+    picturePath: "faker.jpeg",
+    bio: "the best",
+    discordSocial: "fakerGOD",
+    steamSocial: "1123123213",
+    friends: [],
+    location: "Korea",
+    games: [2],
+    createdAt: 1115211422,
+    updatedAt: 1115211422,
+    __v: 0,
+  },
+  {
+    _id: userIds[1],
+    username: "TenZ",
+    email: "tenz@tenz.com",
+    password: "tenz",
+    picturePath: "tenz.jpeg",
+    bio: "i heckin love valorant!",
+    discordSocial: "tenzedzombie",
+    steamSocial: "111122222",
+    friends: [],
+    location: "North America",
+    games: [1],
+    createdAt: 1595589072,
+    updatedAt: 1595589072,
+    __v: 0,
+  },
+];
+
+
+
 export const users = [
   {
     _id: userIds[0],
@@ -309,6 +348,22 @@ export const games = [
     name: "Counter Strike 2",
     picturePath: "cs2_cover.png",
     modes: ["Premier", "Competitive", "Casual"]
+  },
+
+];
+
+// ======================NEW POSTS DATA===================
+export const postsNEW = [
+  {
+    _id: new mongoose.Types.ObjectId(),
+    userId: "656bd0d445f6e2b0366a6cea",
+    username: "gods",
+    description: "lemme carry u",
+    game: "League of Legends",
+    userPicturePath: "faker.jpeg",
+    mode: "competitive",
+    region: "na-east",
+    size: 5,
   },
 
 ];
