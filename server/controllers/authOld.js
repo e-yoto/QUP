@@ -5,15 +5,16 @@ import UserNEW from "../models/UserNEW.js";
 
 /* REGISTER USER */
 export const register = async(req, res) => {
+    console.log(req.body);
     try {
         const {
+            firstName,
+            lastName,
             username,
             email,
             password,
             picturePath,
             bio,
-            discordSocial,
-            steamSocial,
             friends,
             games,
             rating,
@@ -26,13 +27,13 @@ export const register = async(req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         const newUser = new UserNEW({
+            firstName,
+            lastName,
             username,
             email,
             password: passwordHash,
             picturePath,
             bio,
-            discordSocial,
-            steamSocial,
             friends,
             games,
             rating,
@@ -49,7 +50,7 @@ export const register = async(req, res) => {
 export const login = async(req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await UserNEW.findOne( { email: email});
+        const user = await User.findOne( { email: email});
         if (!user) return res.status(400).json({msg: "User does not exist."});
 
         const isMatch = await bcrypt.compare(password, user.password);

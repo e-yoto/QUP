@@ -2,7 +2,7 @@ import {
     ManageAccountsOutlined,
     EditOutlined,
     LocationOnOutlined,
-    WorkOutlineOutlined,
+    DescriptionOutlined,
   } from "@mui/icons-material";
   import { Box, Typography, Divider, useTheme } from "@mui/material";
   import UserImage from "components/UserImage";
@@ -39,14 +39,28 @@ import {
     }
   
     const {
-      firstName,
-      lastName,
+      username,
       location,
-      occupation,
+      games,
+      bio,
+      discordSocial,
+      steamSocial,
       viewedProfile,
       impressions,
       friends,
     } = user;
+
+    var hasValorant, hasLol, hasCs;
+    hasValorant = hasLol = hasCs = false;
+    if (games[0].includes("Valorant")){
+      hasValorant = true;
+    }
+    if (games[0].includes("LeagueOfLegends")){
+      hasLol = true;
+    }
+    if (games[0].includes("CounterStrike2")){
+      hasCs = true;
+    }
   
     return (
       <WidgetWrapper>
@@ -70,7 +84,7 @@ import {
                   },
                 }}
               >
-                {firstName} {lastName}
+                {username}
               </Typography>
               <Typography color={medium}>{friends.length} friends</Typography>
             </Box>
@@ -87,27 +101,39 @@ import {
             <Typography color={medium}>{location}</Typography>
           </Box>
           <Box display="flex" alignItems="center" gap="1rem">
-            <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-            <Typography color={medium}>{occupation}</Typography>
+            <DescriptionOutlined fontSize="large" sx={{ color: main }} />
+            <Typography color={medium}>{bio}</Typography>
           </Box>
         </Box>
-  
+        
         <Divider />
   
         {/* THIRD ROW */}
         <Box p="1rem 0">
-          <FlexBetween mb="0.5rem">
-            <Typography color={medium}>Who's viewed your profile</Typography>
-            <Typography color={main} fontWeight="500">
-              {viewedProfile}
-            </Typography>
-          </FlexBetween>
           <FlexBetween>
-            <Typography color={medium}>Impressions of your post</Typography>
-            <Typography color={main} fontWeight="500">
-              {impressions}
-            </Typography>
+          <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
+            My Games
+          </Typography>
+          <EditOutlined sx={{ color: main }} />
+
           </FlexBetween>
+         
+          {hasValorant && (
+              <>
+            <img margin="0px 10px 0px" width= "40px"src="http://localhost:3001/assets/valorant_icon.png" alt="discord" />
+          </>
+            )}
+          {hasLol && (
+              <>
+            <img margin="0px 10px 0px" width= "40px"src="http://localhost:3001/assets/lol_icon.png" alt="discord" />
+          </>
+            )}
+          {hasCs && (
+              <>
+            <img margin="0px 10px 0px" width= "40px"src="http://localhost:3001/assets/cs_icon.webp" alt="discord" />
+          </>
+            )}
+            
         </Box>
   
         <Divider />
@@ -117,15 +143,15 @@ import {
           <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
             Social Profiles
           </Typography>
-  
+
           <FlexBetween gap="1rem" mb="0.5rem">
             <FlexBetween gap="1rem">
-              <img src="../assets/twitter.png" alt="twitter" />
+              <img width= "40px"src="http://localhost:3001/assets/discord.png" alt="discord" />
               <Box>
                 <Typography color={main} fontWeight="500">
-                  Twitter
+                  Discord
                 </Typography>
-                <Typography color={medium}>Social Network</Typography>
+                <Typography color={medium}>{discordSocial}</Typography>
               </Box>
             </FlexBetween>
             <EditOutlined sx={{ color: main }} />
@@ -133,12 +159,12 @@ import {
   
           <FlexBetween gap="1rem">
             <FlexBetween gap="1rem">
-              <img src="../assets/discord.jpg" alt="linkedin" />
+              <img width= "40px"src="http://localhost:3001/assets/steam.png" alt="steam" />
               <Box>
                 <Typography color={main} fontWeight="500">
-                  Linkedin
+                  Steam
                 </Typography>
-                <Typography color={medium}>Network Platform</Typography>
+                <Typography color={medium}>{steamSocial}</Typography>
               </Box>
             </FlexBetween>
             <EditOutlined sx={{ color: main }} />

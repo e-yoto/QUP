@@ -16,8 +16,9 @@ import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import User from "./models/User.js";
 import Post from "./models/Post.js";
-import { users, posts, games } from "./data/index.js";
+import { users, posts, games, usersNEW } from "./data/index.js";
 import Game from "./models/Game.js";
+import UserNEW from "./models/UserNEW.js";
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -67,5 +68,6 @@ mongoose
     // User.insertMany(users);
     //  Post.insertMany(posts);
     //  Game.insertMany(games);
+    // UserNEW.insertMany(usersNEW);
   })
   .catch((error) => console.log(`${error} did not connect`));
