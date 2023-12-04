@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
+import { Box, Typography } from "@mui/material";
+import FlexBetween from "components/FlexBetween";
 
 const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
@@ -38,7 +40,24 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
+    
     <>
+      
+      {!isProfile && (
+        <>
+          <Box display={"flex"}>
+            <Box flex={1}>
+              <Typography variant="h2">Live Q's</Typography>
+            </Box>
+            <FlexBetween >
+              <img height={"50px"} margin-right={"10px"} src="http://localhost:3001/assets/valorant_icon.png" alt="val_icon" />
+              <img height={"50px"} margin-right={"10px"} src="http://localhost:3001/assets/lol_icon.png" alt="lol_icon" />
+              <img height={"50px"} margin-right={"10px"} src="http://localhost:3001/assets/cs_icon.webp" alt="cs_icon" />
+            </FlexBetween>
+          </Box>
+        </>
+      )}
+      
       {posts.map(
         ({
           _id,

@@ -4,12 +4,15 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "state";
+import FlexBetween from "components/FlexBetween";
+import UserImageSmall from "components/UserImageSmall";
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user.friends);
+  const friends = useSelector((state) => state.user.friends)
+  const main = palette.neutral.main;
 
   const getFriends = async () => {
     const response = await fetch(
@@ -37,7 +40,7 @@ const FriendListWidget = ({ userId }) => {
       >
         Friend List
       </Typography>
-      <Box display="flex" flexDirection="column" gap="1.5rem">
+      {/* <Box display="flex" flexDirection="column" gap="1.5rem">
         {friends.map((friend) => (
           <Friend
             key={friend._id}
@@ -47,7 +50,76 @@ const FriendListWidget = ({ userId }) => {
             userPicturePath={friend.picturePath}
           />
         ))}
-      </Box>
+      </Box> */}
+      <Box display="flex" flexDirection="column" gap="1.5rem">
+                <Box display={"grid"}>
+                  <FlexBetween>
+
+
+
+                  </FlexBetween>
+                  <Box display={"flex"} flexDirection={"row"} alignItems={"center"} mb={"1rem"}>
+
+                    <UserImageSmall image={"goku.png"}></UserImageSmall>
+                    <Typography color={main}
+                variant="h5"
+                fontWeight="500"
+                paddingLeft={"5px"}
+                alignItems={"center"}
+                sx={{
+                  "&:hover": {
+                    color: palette.primary.light,
+                    cursor: "pointer",
+                  },
+                }}>Naruto</Typography>
+                  </Box>
+                  <Box display={"flex"} flexDirection={"row"} mb={"1rem"} alignItems={"center"}>
+
+                    <UserImageSmall image={"patrick.webp"}></UserImageSmall>
+                    <Typography justifyContent="center " color={main}
+                variant="h5"
+                fontWeight="500"
+                paddingLeft={"5px"}
+                alignItems={"center"}
+                sx={{
+                  "&:hover": {
+                    color: palette.primary.light,
+                    cursor: "pointer",
+                  },
+                }}>Patrick Star</Typography>
+                  </Box>
+                  <Box display={"flex"} flexDirection={"row"} mb={"1rem"} alignItems={"center"}>
+
+                    <UserImageSmall image={"ninja.webp"}></UserImageSmall >
+                    <Typography color={main}
+                variant="h5"
+                fontWeight="500"
+                paddingLeft={"5px"}
+                alignItems={"center"}
+                sx={{
+                  "&:hover": {
+                    color: palette.primary.light,
+                    cursor: "pointer",
+                  },
+                }}>Ninja</Typography>
+                  </Box>
+                  <Box display={"flex"} flexDirection={"row"} mb={"1rem"} alignItems={"center"}>
+
+                    <UserImageSmall image={"wolf.jpg"}></UserImageSmall >
+                    <Typography color={main}
+                variant="h5"
+                fontWeight="500"
+                paddingLeft={"5px"}
+                alignItems={"center"}
+                sx={{
+                  "&:hover": {
+                    color: palette.primary.light,
+                    cursor: "pointer",
+                  },
+                }}>big daddy</Typography>
+                  </Box>
+                </Box>
+              </Box>
     </WidgetWrapper>
   );
 };

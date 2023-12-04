@@ -90,9 +90,21 @@ import {
         <FlexBetween mt="0.25rem">
           <FlexBetween gap="1rem">
             <FlexBetween gap="0.3rem">
+              <Box
+                // minWidth={"350px"}
+                // minHeight={"100px"}
+                minWidth={"20rem"}
+                minHeight={"5rem"}
+                border={`1px solid ${palette.neutral.medium}`}
+                borderRadius="5px"
+                p="1rem"
+                >
+
               <Typography color={main} sx={{ mt: "1rem" }}>
+                
                 {description}
               </Typography>
+              </Box>
             </FlexBetween>
           </FlexBetween>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end" gap="0.3rem" flexDirection='column'>
@@ -119,7 +131,7 @@ import {
                 JOIN
               </Button>
               <FlexBetween fontSize="15px" padding="7px">
-                0 / {lobby}
+                3 / {lobby}
               </FlexBetween>
             </Box>
           </Box>

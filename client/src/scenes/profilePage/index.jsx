@@ -50,7 +50,7 @@ const ProfilePage = () => {
         >
           <Typography variant="h1">{`${user.username}`}'s Qs</Typography>
           {/* <MyPostWidget picturePath={user.picturePath} /> */}
-          <Box m="2rem 0" />
+          <Box />
           <PostsWidget userId={userId} isProfile />
         </Box>
       </Box>
