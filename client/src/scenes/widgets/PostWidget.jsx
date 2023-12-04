@@ -11,6 +11,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
+  import { useNavigate } from "react-router-dom";
   
   const PostWidget = ({
     postId,
@@ -31,6 +32,7 @@ import {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
+    const navigate = useNavigate();
     // const isLiked = Boolean(likes[loggedInUserId]);
     // const likeCount = Object.keys(likes).length;
   
@@ -111,6 +113,8 @@ import {
                   borderRadius: "3rem",
                   width: "70px"
                 }}
+                onClick={() => navigate(`/posts/${postId}`)}
+                
               >
                 JOIN
               </Button>
