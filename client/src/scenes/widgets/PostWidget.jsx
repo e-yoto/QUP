@@ -4,7 +4,7 @@ import {
     FavoriteOutlined,
     ShareOutlined,
   } from "@mui/icons-material";
-  import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+  import { Box, Divider, IconButton, Typography, useTheme, Button } from "@mui/material";
   import FlexBetween from "components/FlexBetween";
   import Friend from "components/Friend";
   import WidgetWrapper from "components/WidgetWrapper";
@@ -22,6 +22,10 @@ import {
     userPicturePath,
     likes,
     comments,
+    game,
+    mode,
+    lobby,
+    region,
   }) => {
     const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
@@ -46,6 +50,29 @@ import {
       const updatedPost = await response.json();
       dispatch(setPost({ post: updatedPost }));
     };
+
+
+
+    const displayRegion = (region) => {
+      if(region === "na-east") {
+        return <>NA East</>
+      }
+      if(region === "na-west") {
+        return <>NA West</>
+      }
+      if(region === "na-central") {
+        return <>NA Central</>
+      }
+    }
+
+    const displayMode = (mode) => {
+      if(mode === "competitive") {
+        return <>Competitive</>
+      }
+      if(mode === "casual") {
+        return <>Casual</>
+      }
+    }
   
     return (
       <WidgetWrapper m="2rem 0">
@@ -54,59 +81,45 @@ import {
           name={name}
           subtitle={location}
           userPicturePath={userPicturePath}
+          game={game}
           
         />
         {console.log(name + ' ' + userPicturePath)}
-        <Typography color={main} sx={{ mt: "1rem" }}>
-          {description}
-        </Typography>
-        {picturePath && (
-          <img
-            width="100%"
-            height="auto"
-            alt="post"
-            style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-            src={`http://localhost:3001/assets/${picturePath}`}
-          />
-        )}
         <FlexBetween mt="0.25rem">
           <FlexBetween gap="1rem">
             <FlexBetween gap="0.3rem">
-              <IconButton onClick={patchLike}>
-                {/* {isLiked ? (
-                  <FavoriteOutlined sx={{ color: primary }} />
-                ) : (
-                  <FavoriteBorderOutlined />
-                )} */}
-              </IconButton>
-              {/* <Typography>{likeCount}</Typography> */}
-            </FlexBetween>
-  
-            <FlexBetween gap="0.3rem">
-              <IconButton onClick={() => setIsComments(!isComments)}>
-                <ChatBubbleOutlineOutlined />
-              </IconButton>
-              {/* <Typography>{comments.length}</Typography> */}
+              <Typography color={main} sx={{ mt: "1rem" }}>
+                {description}
+              </Typography>
             </FlexBetween>
           </FlexBetween>
-  
-          <IconButton>
-            <ShareOutlined />
-          </IconButton>
-        </FlexBetween>
-        {isComments && (
-          <Box mt="0.5rem">
-            {comments.map((comment, i) => (
-              <Box key={`${name}-${i}`}>
-                <Divider />
-                <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                  {comment}
-                </Typography>
-              </Box>
-            ))}
-            <Divider />
+          <Box display="flex" justifyContent="flex-end" alignItems="flex-end" gap="0.3rem" flexDirection='column'>
+            <FlexBetween>
+              {game}
+            </FlexBetween>
+            <FlexBetween>
+              {displayMode(mode)}
+            </FlexBetween>
+            <FlexBetween>
+              {displayRegion(region)}
+            </FlexBetween>
+            <Box display="flex" justifyContent="flex-end" alignItems="flex-end" gap="0.3rem" flexDirection='row'>
+              <Button
+                sx={{
+                  color: palette.background.alt,
+                  backgroundColor: palette.primary.main,
+                  borderRadius: "3rem",
+                  width: "70px"
+                }}
+              >
+                JOIN
+              </Button>
+              <FlexBetween fontSize="15px" padding="7px">
+                0 / {lobby}
+              </FlexBetween>
+            </Box>
           </Box>
-        )}
+        </FlexBetween>
       </WidgetWrapper>
     );
   };
