@@ -11,6 +11,7 @@ import {
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
   import { setPost } from "state";
+  import { useNavigate } from "react-router-dom";
   
   const PostWidget = ({
     postId,
@@ -31,6 +32,7 @@ import {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
+    const navigate = useNavigate();
     // const isLiked = Boolean(likes[loggedInUserId]);
     // const likeCount = Object.keys(likes).length;
   
@@ -88,9 +90,21 @@ import {
         <FlexBetween mt="0.25rem">
           <FlexBetween gap="1rem">
             <FlexBetween gap="0.3rem">
+              <Box
+                // minWidth={"350px"}
+                // minHeight={"100px"}
+                minWidth={"20rem"}
+                minHeight={"5rem"}
+                border={`1px solid ${palette.neutral.medium}`}
+                borderRadius="5px"
+                p="1rem"
+                >
+
               <Typography color={main} sx={{ mt: "1rem" }}>
+                
                 {description}
               </Typography>
+              </Box>
             </FlexBetween>
           </FlexBetween>
           <Box display="flex" justifyContent="flex-end" alignItems="flex-end" gap="0.3rem" flexDirection='column'>
@@ -111,11 +125,13 @@ import {
                   borderRadius: "3rem",
                   width: "70px"
                 }}
+                onClick={() => navigate(`/posts/${postId}`)}
+                
               >
                 JOIN
               </Button>
               <FlexBetween fontSize="15px" padding="7px">
-                0 / {lobby}
+                3 / {lobby}
               </FlexBetween>
             </Box>
           </Box>
